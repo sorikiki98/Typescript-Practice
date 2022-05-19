@@ -1,20 +1,18 @@
-import express from 'express';
+import express, { Request, Response, NextFunction} from 'express';
 import 'express-async-errors';
 import morgan from 'morgan';
-import helmet from '../node_modules/helmet/dist/types/index';
+import TweetRouter from './routes/tweets.js';
 
 const app = express();
 
 app.use(express.json());
 app.use(morgan('tiny'));
-app.use(helmet());
+app.use('/tweets', TweetRouter);
 
-
-
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
 	res.sendStatus(404);
 });
 
 app.listen(8080, () => {
-    console.log('STARTED!');
-})
+	console.log('STARTED!');
+});
